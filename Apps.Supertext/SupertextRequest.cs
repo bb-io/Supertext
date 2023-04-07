@@ -13,7 +13,7 @@ namespace Apps.Supertext
         public SupertextRequest(string endpoint, Method method, string login, AuthenticationCredentialsProvider authenticationCredentialsProvider) : base(endpoint, method)
         {
             var bearer = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{login}:{authenticationCredentialsProvider.Value}"));
-            this.AddHeader("Authorization", $"Bearer {bearer}");
+            this.AddHeader("Authorization", $"Basic {bearer}");
             this.AddHeader("Accept", "application/json");
         }
     }
