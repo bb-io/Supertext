@@ -62,5 +62,17 @@ namespace Apps.Supertext.Actions
             var result = client.Execute<UploadFileResponse>(request).Data;
             return result;
         }
+
+        [Action("Create order from file", Description = "Create order from uploaded file")]
+        public CreateOrderJsonResponse CreateOrderFile(string login, AuthenticationCredentialsProvider authenticationCredentialsProvider,
+           [ActionParameter] CreateOrderFromFileRequest input)
+        {
+            var client = new SupertextClient();
+            var request = new SupertextRequest($"/v1.1/translation/order",
+                Method.Post, login, authenticationCredentialsProvider);
+            request.AddJsonBody(input);
+            var result = client.Execute<CreateOrderJsonResponse>(request).Data;
+            return result;
+        }
     }
 }
