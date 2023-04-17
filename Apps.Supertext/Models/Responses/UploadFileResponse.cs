@@ -9,8 +9,8 @@ namespace Apps.Supertext.Models.Responses
     public class UploadFileResponse
     {
         public string Comment { get; set; }
-        public DateTime CreationDate { get; set; }
-        public DateTime LastUpdated { get; set; }
+        public string CreationDate { get; set; }
+        public string LastUpdated { get; set; }
         public int UploadedById { get; set; }
         public string UploadedByName { get; set; }
         public int WordCount { get; set; }

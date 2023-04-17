@@ -44,8 +44,11 @@ namespace Apps.Supertext.Actions
             var request = new SupertextRequest($"/v1.1/translation/order",
                 Method.Post, login, authenticationCredentialsProvider);
             request.AddJsonBody(input);
-            var result = client.Execute<CreateOrderJsonResponse>(request).Data;
-            return result;
+            var result = client.Execute<List<OrderDto>>(request).Data;
+            return new CreateOrderJsonResponse
+            {
+                Orders = result
+            };
         }
 
         [Action("Upload file", Description = "Upload file to translate")]
@@ -59,8 +62,8 @@ namespace Apps.Supertext.Actions
             request.AddParameter("ElementTypeId", 2);
             request.AddParameter("DocumentTypeId", 1);
             request.AddFile("file", input.File, input.Filename);
-            var result = client.Execute<UploadFileResponse>(request).Data;
-            return result;
+            var result = client.Execute<List<UploadFileResponse>>(request).Data;
+            return result.First();
         }
 
         [Action("Create order from file", Description = "Create order from uploaded file")]
@@ -71,8 +74,11 @@ namespace Apps.Supertext.Actions
             var request = new SupertextRequest($"/v1.1/translation/order",
                 Method.Post, login, authenticationCredentialsProvider);
             request.AddJsonBody(input);
-            var result = client.Execute<CreateOrderJsonResponse>(request).Data;
-            return result;
+            var result = client.Execute<List<OrderDto>>(request).Data;
+            return new CreateOrderJsonResponse
+            {
+                Orders = result
+            };
         }
     }
 }

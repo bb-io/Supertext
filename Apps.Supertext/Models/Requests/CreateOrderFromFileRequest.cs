@@ -9,7 +9,6 @@ namespace Apps.Supertext.Models.Requests
     public class CreateOrderFromFileRequest
     {
         public string CallbackUrl { get; set; }
-        public string ContentType { get; set; }
         public int DeliveryId { get; set; }
         public string OrderName { get; set; }
         public string AdditionalInformation { get; set; }
