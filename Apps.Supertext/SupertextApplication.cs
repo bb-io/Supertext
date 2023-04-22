@@ -9,9 +9,15 @@ namespace Apps.Supertext
 {
     public class SupertextApplication : IApplication
     {
-        public string Name { 
-            get => "Supertext Application";
-            set { } 
+        public string Name
+        {
+            get => "Supertext";
+            set { }
+        }
+
+        public T GetInstance<T>()
+        {
+            throw new NotImplementedException();
         }
     }
 }
