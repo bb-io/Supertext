@@ -67,6 +67,22 @@ namespace Apps.Supertext.Actions
             return result.First();
         }
 
+        [Action("Download file", Description = "Download file by id and name")]
+        public DownloadFileResponse DownloadFile(IEnumerable<AuthenticationCredentialsProvider> authenticationCredentialsProviders,
+           [ActionParameter] DownloadFileRequest input)
+        {
+            var client = new SupertextClient();
+            var request = new SupertextRequest($"/../FileDownloads/File/{input.FileId}/{input.FileName}",
+                Method.Get, authenticationCredentialsProviders);
+           
+            var resultData = client.Get(request).RawBytes;
+            return new DownloadFileResponse()
+            {
+                FileName = input.FileName,
+                File = resultData
+            };
+        }
+
         [Action("Create order from file", Description = "Create order from uploaded file")]
         public CreateOrderJsonResponse CreateOrderFile(IEnumerable<AuthenticationCredentialsProvider> authenticationCredentialsProviders,
            [ActionParameter] CreateOrderFromFileRequest input)
@@ -74,7 +90,23 @@ namespace Apps.Supertext.Actions
             var client = new SupertextClient();
             var request = new SupertextRequest($"/v1.1/translation/order",
                 Method.Post, authenticationCredentialsProviders);
-            request.AddJsonBody(input);
+            request.AddJsonBody(new OrderFromFileDto()
+            {
+                CallbackUrl = input.CallbackUrl,
+                DeliveryId = input.DeliveryId,
+                OrderName = input.OrderName,
+                AdditionalInformation = input.AdditionalInformation,
+                OrderTypeId = input.OrderTypeId,
+                ReferenceData = input.ReferenceData,
+                Referrer = input.Referrer,
+                SystemName = input.SystemName,
+                SystemVersion = input.SystemVersion,
+                ComponentName = input.ComponentName,
+                ComponentVersion = input.ComponentVersion,
+                SourceLang = input.SourceLang,
+                TargetLanguages = new[] { input.TargetLanguage },
+                Files = new[] { new FileItem() { ID = input.FileId, Comment = input.FileComment } }
+            });
             var result = client.Execute<List<OrderDto>>(request).Data;
             return new CreateOrderJsonResponse
             {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Apps.Supertext.Models.Requests
+namespace Apps.Supertext.Dtos
 {
-    public class CreateOrderFromFileRequest
+    public class OrderFromFileDto
     {
         public string CallbackUrl { get; set; }
         public int DeliveryId { get; set; }
@@ -20,8 +20,13 @@ namespace Apps.Supertext.Models.Requests
         public string ComponentName { get; set; }
         public string ComponentVersion { get; set; }
         public string SourceLang { get; set; }
-        public string TargetLanguage { get; set; }
-        public string FileId { get; set; }
-        public string FileComment { get; set; }
+        public IEnumerable<string> TargetLanguages { get; set; }
+        public IEnumerable<FileItem> Files { get; set; }
+    }
+
+    public class FileItem
+    {
+        public string ID { get; set; }
+        public string Comment { get; set; }
     }
 }

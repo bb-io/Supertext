@@ -69,7 +69,6 @@ namespace Apps.Supertext.Dtos
         public string ProjectId { get; set; }
         public int PaymentPeriod { get; set; }
         public string PersonName { get; set; }
-        public double Price { get; set; }
         public int ProjectManagerId { get; set; }
         public int ProofreadingModeId { get; set; }
         public string Referrer { get; set; }
