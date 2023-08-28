@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using File = Blackbird.Applications.Sdk.Common.Files.File;
 
 namespace Apps.Supertext.Models.Requests
 {
     public class UploadFileRequest
     {
-        public string Filename { get; set; }
-
-        public byte[] File { get; set; }
+        public File File { get; set; }
     }
 }

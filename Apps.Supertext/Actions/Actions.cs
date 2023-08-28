@@ -5,6 +5,7 @@ using Apps.Supertext.Models.Responses;
 using Apps.Supertext.Models.Requests;
 using Apps.Supertext.Dtos;
 using Blackbird.Applications.Sdk.Common.Actions;
+using File = Blackbird.Applications.Sdk.Common.Files.File;
 
 namespace Apps.Supertext.Actions
 {
@@ -62,7 +63,7 @@ namespace Apps.Supertext.Actions
             request.AddParameter("ElementId", 0);
             request.AddParameter("ElementTypeId", 2);
             request.AddParameter("DocumentTypeId", 1);
-            request.AddFile("file", input.File, input.Filename);
+            request.AddFile("file", input.File.Bytes, input.File.Name);
             var result = client.Execute<List<UploadFileResponse>>(request).Data;
             return result.First();
         }
@@ -75,11 +76,15 @@ namespace Apps.Supertext.Actions
             var request = new SupertextRequest($"/../FileDownloads/File/{input.FileId}/{input.FileName}",
                 Method.Get, authenticationCredentialsProviders);
            
-            var resultData = client.Get(request).RawBytes;
+            var result = client.Get(request);
+
             return new DownloadFileResponse()
             {
-                FileName = input.FileName,
-                File = resultData
+                File = new File(result.RawBytes)
+                {
+                    Name = input.FileName,
+                    ContentType = result.ContentType
+                }
             };
         }
 
