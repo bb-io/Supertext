@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Apps.Supertext.Callbacks.Payload
+﻿namespace Apps.Supertext.Callbacks.Payload
 {
     public class FileTranslatedEvent
     {
