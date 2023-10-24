@@ -1,7 +1,6 @@
-﻿namespace Apps.Supertext.Dtos
+﻿namespace Apps.Supertext.Dtos;
+
+public class MappingLanguagesWrapper<T>
 {
-    public class MappingLanguagesWrapper<T>
-    {
-        public T Languages { get; set; }
-    }
+    public T Languages { get; set; }
 }

@@ -1,8 +1,12 @@
-﻿namespace Apps.Supertext.Models.Requests
+﻿using Blackbird.Applications.Sdk.Common;
+
+namespace Apps.Supertext.Models.Requests;
+
+public class DownloadFileRequest
 {
-    public class DownloadFileRequest
-    {
-        public string FileId { get; set; }
-        public string FileName { get; set; }
-    }
+    [Display("File ID")]
+    public string FileId { get; set; }
+    
+    [Display("File name")]
+    public string FileName { get; set; }
 }

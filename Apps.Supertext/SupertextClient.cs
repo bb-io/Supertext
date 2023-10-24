@@ -1,9 +1,8 @@
 ﻿using RestSharp;
 
-namespace Apps.Supertext
+namespace Apps.Supertext;
+
+public class SupertextClient : RestClient
 {
-    public class SupertextClient : RestClient
-    {
-        public SupertextClient() : base(new RestClientOptions() { ThrowOnAnyError = true, BaseUrl = new Uri("https://www.supertext.ch/api/") }) { }
-    }
+    public SupertextClient() : base(new RestClientOptions() { ThrowOnAnyError = true, BaseUrl = new Uri("https://www.supertext.ch/api/") }) { }
 }

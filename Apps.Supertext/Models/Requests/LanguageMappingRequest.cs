@@ -1,7 +1,9 @@
-﻿namespace Apps.Supertext.Models.Requests
+﻿using Blackbird.Applications.Sdk.Common;
+
+namespace Apps.Supertext.Models.Requests;
+
+public class LanguageMappingRequest
 {
-    public class LanguageMappingRequest
-    {
-        public string LanguageCode { get; set; }
-    }
+    [Display("Language code")]
+    public string LanguageCode { get; set; }
 }
