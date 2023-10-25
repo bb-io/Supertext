@@ -1,3 +1,4 @@
+using Apps.Supertext.Api;
 using Apps.Supertext.Dtos;
 using Apps.Supertext.Invocables;
 using Apps.Supertext.Models.Requests;
@@ -16,11 +17,11 @@ public class QuoteActions : SupertextInvocable
     }
 
     [Action("Get quote", Description = "Get quote")]
-    public QuoteDto GetQuote([ActionParameter] GetQuoteRequest input)
+    public Task<QuoteDto> GetQuote([ActionParameter] GetQuoteRequest input)
     {
         var request = new SupertextRequest("/v1/translation/quote", Method.Post, Creds)
             .AddJsonBody(input);
 
-        return Client.Execute<QuoteDto>(request).Data!;
+        return Client.ExecuteWithErrorHandling<QuoteDto>(request);
     }
 }

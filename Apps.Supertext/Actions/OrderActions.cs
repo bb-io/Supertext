@@ -1,3 +1,4 @@
+using Apps.Supertext.Api;
 using Apps.Supertext.Dtos;
 using Apps.Supertext.Invocables;
 using Apps.Supertext.Models.Requests;
@@ -17,7 +18,7 @@ public class OrderActions : SupertextInvocable
     }
 
     [Action("Create order from file", Description = "Create order from uploaded file")]
-    public CreateOrderJsonResponse CreateOrderFile([ActionParameter] CreateOrderFromFileRequest input)
+    public async Task<CreateOrderJsonResponse> CreateOrderFile([ActionParameter] CreateOrderFromFileRequest input)
     {
         var request = new SupertextRequest("/v1.1/translation/order", Method.Post, Creds)
             .AddJsonBody(new OrderFromFileDto()
@@ -38,7 +39,7 @@ public class OrderActions : SupertextInvocable
                 Files = new[] { new FileItem() { ID = input.FileId, Comment = input.FileComment } }
             });
 
-        var result = Client.Execute<List<OrderDto>>(request).Data;
+        var result = await Client.ExecuteWithErrorHandling<List<OrderDto>>(request);
         return new()
         {
             Orders = result
@@ -46,12 +47,12 @@ public class OrderActions : SupertextInvocable
     }
 
     [Action("Create order from json", Description = "Create order from json")]
-    public CreateOrderJsonResponse CreateOrderJson([ActionParameter] CreateOrderJsonRequest input)
+    public async Task<CreateOrderJsonResponse> CreateOrderJson([ActionParameter] CreateOrderJsonRequest input)
     {
         var request = new SupertextRequest("/v1.1/translation/order", Method.Post, Creds)
             .AddJsonBody(input);
 
-        var result = Client.Execute<List<OrderDto>>(request).Data;
+        var result = await Client.ExecuteWithErrorHandling<List<OrderDto>>(request);
         return new()
         {
             Orders = result

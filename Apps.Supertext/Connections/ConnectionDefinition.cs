@@ -7,20 +7,21 @@ public class ConnectionDefinition : IConnectionDefinition
 {
     public IEnumerable<ConnectionPropertyGroup> ConnectionPropertyGroups => new List<ConnectionPropertyGroup>()
     {
-        new ConnectionPropertyGroup
+        new()
         {
             Name = "Developer API token",
             AuthenticationType = ConnectionAuthenticationType.Undefined,
             ConnectionUsage = ConnectionUsage.Actions,
             ConnectionProperties = new List<ConnectionProperty>()
             {
-                new ConnectionProperty("login"),
-                new ConnectionProperty("apiToken")
+                new("login") { DisplayName = "Login" },
+                new("apiToken") { DisplayName = "API token", Sensitive = true }
             }
         }
     };
 
-    public IEnumerable<AuthenticationCredentialsProvider> CreateAuthorizationCredentialsProviders(Dictionary<string, string> values)
+    public IEnumerable<AuthenticationCredentialsProvider> CreateAuthorizationCredentialsProviders(
+        Dictionary<string, string> values)
     {
         var login = values.First(v => v.Key == "login");
         yield return new AuthenticationCredentialsProvider(

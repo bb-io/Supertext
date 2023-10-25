@@ -1,4 +1,6 @@
-﻿namespace Apps.Supertext.Dtos;
+﻿using Blackbird.Applications.Sdk.Common;
+
+namespace Apps.Supertext.Dtos;
 
 public class SupertextLanguageDto
 {
@@ -6,15 +8,15 @@ public class SupertextLanguageDto
 
     public string Title { get; set; }
 
-    public int Id { get; set; }
+    [Display("Language ID")] public int Id { get; set; }
 
-    public string SdlCode { get; set; }
+    [Display("SDL code")] public string SdlCode { get; set; }
 
-    public bool IsPriorityLanguage { get; set; }
+    [Display("Is priority language")] public bool IsPriorityLanguage { get; set; }
 
-    public bool EnabledTargetLanguage { get; set; }
+    [Display("Enabled target language")] public bool EnabledTargetLanguage { get; set; }
 
-    public bool EnabledSourceLanguage { get; set; }
+    [Display("Enabled source language")] public bool EnabledSourceLanguage { get; set; }
 
-    public bool IsSystemLanguage { get; set; }
+    [Display("Is system language")] public bool IsSystemLanguage { get; set; }
 }

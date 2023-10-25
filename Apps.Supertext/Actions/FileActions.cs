@@ -1,3 +1,4 @@
+using Apps.Supertext.Api;
 using Apps.Supertext.Invocables;
 using Apps.Supertext.Models.Requests;
 using Apps.Supertext.Models.Responses;
@@ -16,7 +17,7 @@ public class FileActions : SupertextInvocable
     }
 
     [Action("Upload file", Description = "Upload file to translate")]
-    public UploadFileResponse UploadFile([ActionParameter] UploadFileRequest input)
+    public async Task<UploadFileResponse> UploadFile([ActionParameter] UploadFileRequest input)
     {
         var request = new SupertextRequest("/v1/files", Method.Post, Creds)
             .AddParameter("ElementId", 0)
@@ -24,17 +25,17 @@ public class FileActions : SupertextInvocable
             .AddParameter("DocumentTypeId", 1)
             .AddFile("file", input.File.Bytes, input.File.Name);
 
-        var result = Client.Execute<List<UploadFileResponse>>(request).Data;
+        var result = await Client.ExecuteWithErrorHandling<List<UploadFileResponse>>(request);
         return result.First();
     }
 
     [Action("Download file", Description = "Download file by id and name")]
-    public DownloadFileResponse DownloadFile([ActionParameter] DownloadFileRequest input)
+    public async Task<DownloadFileResponse> DownloadFile([ActionParameter] DownloadFileRequest input)
     {
         var endpoint = $"/../FileDownloads/File/{input.FileId}/{input.FileName}";
         var request = new SupertextRequest(endpoint, Method.Get, Creds);
 
-        var result = Client.Get(request);
+        var result = await Client.ExecuteWithErrorHandling(request);
 
         return new()
         {

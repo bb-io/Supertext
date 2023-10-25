@@ -1,4 +1,5 @@
-﻿using Blackbird.Applications.Sdk.Common;
+﻿using Apps.Supertext.Api;
+using Blackbird.Applications.Sdk.Common;
 using RestSharp;
 using Apps.Supertext.Models.Responses;
 using Apps.Supertext.Models.Requests;
@@ -17,12 +18,13 @@ public class LanguageActions : SupertextInvocable
     }
 
     [Action("Get language mapping", Description = "Get language mapping by language code")]
-    public LanguageMappingResponse GetLanguageMapping([ActionParameter] LanguageMappingRequest input)
+    public async Task<LanguageMappingResponse> GetLanguageMapping([ActionParameter] LanguageMappingRequest input)
     {
         var endpoint = $"/v1/translation/languagemapping/{input.LanguageCode}";
         var request = new SupertextRequest(endpoint, Method.Get, Creds);
 
-        var languages = Client.Get<MappingLanguagesWrapper<List<SupertextLanguageDto>>>(request);
+        var languages =
+            await Client.ExecuteWithErrorHandling<MappingLanguagesWrapper<List<SupertextLanguageDto>>>(request);
 
         return new()
         {
