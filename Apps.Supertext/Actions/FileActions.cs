@@ -5,6 +5,8 @@ using Apps.Supertext.Models.Responses;
 using Blackbird.Applications.Sdk.Common;
 using Blackbird.Applications.Sdk.Common.Actions;
 using Blackbird.Applications.Sdk.Common.Invocation;
+using Blackbird.Applications.Sdk.Utils.Extensions.Files;
+using Blackbird.Applications.SDK.Extensions.FileManagement.Interfaces;
 using RestSharp;
 
 namespace Apps.Supertext.Actions;
@@ -12,18 +14,21 @@ namespace Apps.Supertext.Actions;
 [ActionList]
 public class FileActions : SupertextInvocable
 {
-    public FileActions(InvocationContext invocationContext) : base(invocationContext)
+    private readonly IFileManagementClient _fileManagementClient;
+    public FileActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient) : base(invocationContext)
     {
     }
 
     [Action("Upload file", Description = "Upload file to translate")]
     public async Task<UploadFileResponse> UploadFile([ActionParameter] UploadFileRequest input)
     {
+        var fileBytes = _fileManagementClient.DownloadAsync(input.File).Result.GetByteData().Result;
+
         var request = new SupertextRequest("/v1/files", Method.Post, Creds)
             .AddParameter("ElementId", 0)
             .AddParameter("ElementTypeId", 2)
             .AddParameter("DocumentTypeId", 1)
-            .AddFile("file", input.File.Bytes, input.File.Name);
+            .AddFile("file", fileBytes, input.File.Name);
 
         var result = await Client.ExecuteWithErrorHandling<List<UploadFileResponse>>(request);
         return result.First();
@@ -37,13 +42,11 @@ public class FileActions : SupertextInvocable
 
         var result = await Client.ExecuteWithErrorHandling(request);
 
+        using var stream = new MemoryStream(result.RawBytes);
+        var file = await _fileManagementClient.UploadAsync(stream, result.ContentType, input.FileName);
         return new()
         {
-            File = new(result.RawBytes)
-            {
-                Name = input.FileName,
-                ContentType = result.ContentType
-            }
+            File = file
         };
     }
 }
