@@ -15,8 +15,11 @@ namespace Apps.Supertext.Actions;
 public class FileActions : SupertextInvocable
 {
     private readonly IFileManagementClient _fileManagementClient;
-    public FileActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient) : base(invocationContext)
+
+    public FileActions(InvocationContext invocationContext, IFileManagementClient fileManagementClient) : base(
+        invocationContext)
     {
+        _fileManagementClient = fileManagementClient;
     }
 
     [Action("Upload file", Description = "Upload file to translate")]

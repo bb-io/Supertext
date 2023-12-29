@@ -4,7 +4,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Product>Supertext</Product>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Description>Creative localization and copywriting solutions</Description>
     <AssemblyName>Apps.Supertext</AssemblyName>
   </PropertyGroup>
