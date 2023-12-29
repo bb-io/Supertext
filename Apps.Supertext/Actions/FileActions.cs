@@ -22,13 +22,13 @@ public class FileActions : SupertextInvocable
     [Action("Upload file", Description = "Upload file to translate")]
     public async Task<UploadFileResponse> UploadFile([ActionParameter] UploadFileRequest input)
     {
-        var fileBytes = _fileManagementClient.DownloadAsync(input.File).Result.GetByteData().Result;
+        var fileStream = await _fileManagementClient.DownloadAsync(input.File);
 
         var request = new SupertextRequest("/v1/files", Method.Post, Creds)
             .AddParameter("ElementId", 0)
             .AddParameter("ElementTypeId", 2)
             .AddParameter("DocumentTypeId", 1)
-            .AddFile("file", fileBytes, input.File.Name);
+            .AddFile("file", () => fileStream, input.File.Name);
 
         var result = await Client.ExecuteWithErrorHandling<List<UploadFileResponse>>(request);
         return result.First();
