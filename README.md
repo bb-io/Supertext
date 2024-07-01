@@ -6,7 +6,26 @@ Blackbird is the new automation backbone for the language technology industry. B
 
 <!-- begin docs -->
 
-Documentation coming soon.
+Supertext's platform to streamline multilingual communication and content creation. It offers a single online interface to manage all translation, copywriting, and localization needs. 
+
+## Actions
+
+###  File
+- **Upload file** Upload file to translate
+- **Download file** Download file by id and name
+
+###  Language
+- **Get language mapping** Get language mapping by language code
+
+###  Order
+- **Create order from file** Create order from uploaded file
+- **Create order from json** Create order from json
+
+###  Quote
+- **Get quote** Get quote
+
+##  Events
+- **On file translated** On file translated
 
 ## Feedback
 
