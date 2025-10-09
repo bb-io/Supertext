@@ -1,4 +1,5 @@
 ﻿using Apps.Supertext.Models.Responses;
+using Blackbird.Applications.Sdk.Common.Exceptions;
 using Blackbird.Applications.Sdk.Utils.RestSharp;
 using Newtonsoft.Json;
 using RestSharp;
@@ -17,6 +18,6 @@ public class SupertextClient : BlackBirdRestClient
     protected override Exception ConfigureErrorException(RestResponse response)
     {
         var error = JsonConvert.DeserializeObject<ErrorResponse>(response.Content!)!;
-        return new(error.Message);
+        throw new PluginApplicationException(error.Message);
     }
 }

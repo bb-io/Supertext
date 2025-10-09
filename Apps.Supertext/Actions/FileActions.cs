@@ -11,7 +11,7 @@ using RestSharp;
 
 namespace Apps.Supertext.Actions;
 
-[ActionList]
+[ActionList("File")]
 public class FileActions : SupertextInvocable
 {
     private readonly IFileManagementClient _fileManagementClient;
