@@ -9,7 +9,7 @@ using RestSharp;
 
 namespace Apps.Supertext.Actions;
 
-[ActionList]
+[ActionList("Quote")]
 public class QuoteActions : SupertextInvocable
 {
     public QuoteActions(InvocationContext invocationContext) : base(invocationContext)

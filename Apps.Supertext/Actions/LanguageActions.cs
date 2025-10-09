@@ -10,7 +10,7 @@ using Blackbird.Applications.Sdk.Common.Invocation;
 
 namespace Apps.Supertext.Actions;
 
-[ActionList]
+[ActionList("Language")]
 public class LanguageActions : SupertextInvocable
 {
     public LanguageActions(InvocationContext invocationContext) : base(invocationContext)

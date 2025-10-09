@@ -10,7 +10,7 @@ using RestSharp;
 
 namespace Apps.Supertext.Actions;
 
-[ActionList]
+[ActionList("Order")]
 public class OrderActions : SupertextInvocable
 {
     public OrderActions(InvocationContext invocationContext) : base(invocationContext)
